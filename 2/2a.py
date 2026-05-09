@@ -1,41 +1,52 @@
-# Build a Simple Sequential CNN Model for MNIST Classification
+# Imports required packages
 
-# Import required packages
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 
-# Load MNIST dataset
+
+# Loads MNIST dataset
+
 (X_train_full, y_train_full), (X_test, y_test) = mnist.load_data()
 
-# Check shape of datasets
-print("Training Set Shape:", X_train_full.shape)
-print("Test Set Shape:", X_test.shape)
 
-# Normalize the data
-X_train_full = X_train_full / 255.0
-X_test = X_test / 255.0
+# Checks the shape of the datasets
 
-# Split validation dataset
-X_train = X_train_full[:-5000]
-X_val = X_train_full[-5000:]
+print("Full training set shape:", X_train_full.shape)
+print("Test set shape:", X_test.shape)
 
-y_train = y_train_full[:-5000]
-y_val = y_train_full[-5000:]
 
-# Add channel dimension
+# Normalizes the data between 0 and 1
+
+X_train_full = X_train_full / 255.
+X_test = X_test / 255.
+
+
+# Splits train dataset into training and validation set
+
+X_train, X_val = X_train_full[:-5000], X_train_full[-5000:]
+
+y_train, y_val = y_train_full[:-5000], y_train_full[-5000:]
+
+
+# Adds channel dimension
+
 X_train = X_train[..., np.newaxis]
 X_val = X_val[..., np.newaxis]
 X_test = X_test[..., np.newaxis]
 
-# Check updated shape
-print("Updated Training Shape:", X_train.shape)
 
-# Create CNN Model
+# Checks updated shape
+
+print(X_train.shape)
+
+
+# Creates CNN model
+
 tf.random.set_seed(42)
 
 model = tf.keras.Sequential([
-    
+
     tf.keras.layers.Conv2D(
         32,
         kernel_size=3,
@@ -70,16 +81,21 @@ model = tf.keras.Sequential([
         10,
         activation="softmax"
     )
+
 ])
 
-# Compile model
+
+# Compiles model
+
 model.compile(
     loss="sparse_categorical_crossentropy",
     optimizer="nadam",
     metrics=["accuracy"]
 )
 
-# Train model
+
+# Fits the model
+
 model.fit(
     X_train,
     y_train,
@@ -87,10 +103,12 @@ model.fit(
     validation_data=(X_val, y_val)
 )
 
-# Save model
-model.save("my_mnist_cnn_model.keras")
 
-# Evaluate model
-test_loss, test_accuracy = model.evaluate(X_test, y_test)
+# Saves the model
 
-print("Test Accuracy:", test_accuracy)
+model.save("./models/my_mnist_cnn_model.keras")
+
+
+# Evaluates model
+
+model.evaluate(X_test, y_test)
