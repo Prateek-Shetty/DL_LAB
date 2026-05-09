@@ -1,5 +1,3 @@
-# Experiment with Different Optimizers
-
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 
@@ -19,48 +17,61 @@ def create_model():
 
     model = tf.keras.Sequential([
 
-        tf.keras.layers.Dense(128, activation='relu', input_shape=(784,)),
+        tf.keras.layers.Dense(
+            128,
+            activation='relu',
+            input_shape=(784,)
+        ),
 
-        tf.keras.layers.Dense(64, activation='relu'),
+        tf.keras.layers.Dense(
+            64,
+            activation='relu'
+        ),
 
-        tf.keras.layers.Dense(10, activation='softmax')
+        tf.keras.layers.Dense(
+            10,
+            activation='softmax'
+        )
 
     ])
 
     return model
 
 
-# Adam Optimizer
-model_adam = create_model()
+# Different optimizers
+optimizers = {
 
-model_adam.compile(
-    optimizer='adam',
-    loss='sparse_categorical_crossentropy',
-    metrics=['accuracy']
-)
+    "SGD": tf.keras.optimizers.SGD(),
 
-print("Training with Adam Optimizer")
+    "Adam": tf.keras.optimizers.Adam(),
 
-model_adam.fit(X_train, y_train, epochs=5)
+    "RMSprop": tf.keras.optimizers.RMSprop()
 
-adam_loss, adam_accuracy = model_adam.evaluate(X_test, y_test)
-
-print("Adam Accuracy:", adam_accuracy)
+}
 
 
-# RMSProp Optimizer
-model_rms = create_model()
+# Train model using each optimizer
+for name, optimizer in optimizers.items():
 
-model_rms.compile(
-    optimizer='rmsprop',
-    loss='sparse_categorical_crossentropy',
-    metrics=['accuracy']
-)
+    print("\nOptimizer:", name)
 
-print("Training with RMSProp Optimizer")
+    model = create_model()
 
-model_rms.fit(X_train, y_train, epochs=5)
+    model.compile(
+        optimizer=optimizer,
+        loss='sparse_categorical_crossentropy',
+        metrics=['accuracy']
+    )
 
-rms_loss, rms_accuracy = model_rms.evaluate(X_test, y_test)
+    model.fit(
+        X_train,
+        y_train,
+        epochs=5
+    )
 
-print("RMSProp Accuracy:", rms_accuracy)
+    loss, accuracy = model.evaluate(
+        X_test,
+        y_test
+    )
+
+    print("Test Accuracy:", accuracy)
