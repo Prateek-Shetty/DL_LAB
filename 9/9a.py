@@ -1,3 +1,6 @@
+#Implement a simple GAN to generate images from random noise (e.g., MNIST digit generation).
+
+
 import tensorflow as tf
 
 from tensorflow.keras.layers import Dense, Flatten, Reshape, LeakyReLU, BatchNormalization

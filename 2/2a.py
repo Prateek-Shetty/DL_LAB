@@ -1,3 +1,8 @@
+#Build a simple Sequential CNN model for classifying CIFAR-10
+
+
+
+
 # Imports required packages
 
 import numpy as np

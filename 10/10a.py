@@ -1,3 +1,5 @@
+#Implement quantization and pruning techniques in a neural network to reduce its size and computational demands compare results with the baseline models
+
 import tensorflow as tf
 
 import tensorflow_model_optimization as tfmot

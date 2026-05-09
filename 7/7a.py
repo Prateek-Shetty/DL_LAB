@@ -1,3 +1,5 @@
+#Implement a basic RNN for sequence prediction.
+
 import numpy as np
 
 import tensorflow as tf

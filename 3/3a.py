@@ -1,3 +1,7 @@
+
+#Experiment with different optimizers (e.g., Adam vs. RMSProp) and compare their impact on accuracy and convergence.
+
+
 import numpy as np
 import pandas as pd
 

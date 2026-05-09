@@ -1,3 +1,5 @@
+#Create a denoising autoencoder to remove noise from images.
+
 import tensorflow as tf
 import pandas as pd
 import numpy as np

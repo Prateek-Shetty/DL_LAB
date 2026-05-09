@@ -1,3 +1,6 @@
+#Explore a pretrained model (e.g., MobileNet) on a transfer learning task.
+
+
 # Imports required packages
 
 import tensorflow as tf
